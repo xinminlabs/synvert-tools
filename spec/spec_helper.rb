@@ -1,6 +1,11 @@
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
+ENV["RACK_ENV"] ||= "test" 
+require "bundler"
+Bundler.require(:default, :test) 
 
-require 'synvert_tools'
+ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..')).freeze
+$LOAD_PATH << ROOT
+    
+require 'app'
 
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
