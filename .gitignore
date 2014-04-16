@@ -1,3 +1,6 @@
 tmp/
 .DS_Store
 .bundle
+
+!vendor/bower_components/
+vendor/bower_components/*

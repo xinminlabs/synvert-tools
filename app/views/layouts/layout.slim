@@ -1,6 +1,13 @@
 doctype html
 html
   head
+    meta name='viewport' content='width=device-width, initial-scale=1'
     title Sinatra Tools App
+    link href='assets/application.css' rel='stylesheet' type='text/css'
   body
-    == yield
+    div class='container'
+      div class='header'
+      div class='wrapper'
+        == yield
+      div class='footer'
+    script src='assets/application.js'

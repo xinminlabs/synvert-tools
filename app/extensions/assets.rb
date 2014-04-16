@@ -24,6 +24,11 @@ module SynvertToolsApp
         assets.append_path('vendor/assets/javascripts')
         assets.append_path('vendor/assets/stylesheets')
 
+        assets.append_path('vendor/bower_components/jquery/dist')
+        assets.append_path('vendor/bower_components/bootstrap/dist/css')
+        assets.append_path('vendor/bower_components/bootstrap/dist/js')
+        assets.append_path('vendor/bower_components/bootstrap/dist/fonts')
+
         Stylus.setup(assets)
 
         app.set :asset_host, ''
@@ -33,7 +38,7 @@ module SynvertToolsApp
         end
 
         app.configure :production do
-          assets.cache          = Sprockets::Cache::MemcacheStore.new
+          # assets.cache          = Sprockets::Cache::MemcacheStore.new
           assets.js_compressor  = Closure::Compiler.new
           assets.css_compressor = YUI::CssCompressor.new
         end
