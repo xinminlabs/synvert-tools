@@ -1,5 +1,8 @@
 //= require 'jquery'
 //= require 'bootstrap'
+//= require 'ace/ace'
+//= require 'ace/theme-twilight'
+//= require 'ace/mode-ruby'
 
 $(document).ready(function() {
   $('#convert-container textarea').on('change keyup paste', function() {
@@ -13,6 +16,14 @@ $(document).ready(function() {
     });
 
     request.done(function(msg) {
+      var result = msg['result'];
+      if(result) {
+        console.log(result);
+        result = result.replace(/\n/g, '<br />');
+        result = result.replace(/ /g, '&nbsp');
+        $('#convert-result').html(result);
+      } else {
+      }
     });
 
     request.fail(function(jqXHR, textStatus) {

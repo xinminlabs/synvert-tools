@@ -12,10 +12,16 @@ module SynvertToolsApp
       post '/convert' do
         @code = params[:code]
 
-        @nodes = @code.present? ? SynvertTools.to_ast_node(@code).to_s : nil
+        result = @code.present? ? SynvertTools.to_ast_node(@code).to_sexp : nil
+
+        if result
+          result = result.gsub(/\n/, '<br>')
+          result = result.gsub(/( )/, '&nbsp;&nbsp;')
+          p result
+        end
 
         content_type :json
-        { nodes: @nodes }.to_json
+        { result: result }.to_json
       end
 
       post '/match' do
