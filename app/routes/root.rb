@@ -12,12 +12,11 @@ module SynvertToolsApp
       post '/convert' do
         @code = params[:code]
 
-        result = @code.present? ? SynvertTools.to_ast_node(@code).to_sexp : nil
+        result = @code.present? ? SynvertTools.to_ast_node(@code).to_sexp : nil rescue nil
 
         if result
           result = result.gsub(/\n/, '<br>')
           result = result.gsub(/( )/, '&nbsp;&nbsp;')
-          p result
         end
 
         content_type :json

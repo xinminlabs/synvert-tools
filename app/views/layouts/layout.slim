@@ -3,6 +3,7 @@ html
   head
     meta name='viewport' content='width=device-width, initial-scale=1'
     title Sinatra Tools App
+    link href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css' rel='stylesheet' type='text/css'
     link href='assets/application.css' rel='stylesheet' type='text/css'
   body
     div class='container'
@@ -10,4 +11,6 @@ html
       div class='wrapper'
         == yield
       div class='footer'
+    script src='http://code.jquery.com/jquery-2.1.0.min.js'
+    script src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js'
     script src='assets/application.js'

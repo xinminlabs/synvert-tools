@@ -1,7 +1,0 @@
-{
-  "name": "Synvert Tools App",
-
-  "dependencies": {
-    "bootstrap": "3.1.1"
-  }
-}

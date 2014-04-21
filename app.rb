@@ -48,9 +48,11 @@ module SynvertToolsApp
 
     use Routes::Static
 
-    unless settings.production?
-      use Routes::Assets
-    end
+    # unless settings.production?
+      # use Routes::Assets
+    # end
+
+    use Routes::Assets
 
     # Other routes:
     use Routes::Root

@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.1.1'
+
 gem 'synvert'
 gem 'sinatra', require: 'sinatra/base'
 gem 'sinatra-contrib', github: 'maccman/sinatra-contrib'
