@@ -3,6 +3,19 @@
 //= require 'ace/mode-ruby'
 
 $(document).ready(function() {
+  $('.nav li a').on('click', function(e) {
+    e.preventDefault();
+    $('.nav li a').each(function(index, dom) {
+      if(e.target == dom) {
+        $(dom).parent().addClass('active');
+        $('#' + $(dom).parent().data('target')).removeClass('hidden');
+      } else {
+        $(dom).parent().removeClass('active');
+        $('#' + $(dom).parent().data('target')).addClass('hidden');
+      }
+    });
+  });
+
   $('#convert-container textarea').on('change keyup paste', function() {
     var code = $('#convert-container textarea').val();
 
@@ -16,7 +29,6 @@ $(document).ready(function() {
     request.done(function(msg) {
       var result = msg['result'];
       if(result) {
-        console.log(result);
         result = result.replace(/\n/g, '<br />');
         result = result.replace(/ /g, '&nbsp');
         $('#convert-result').html(result);
