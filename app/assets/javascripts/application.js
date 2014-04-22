@@ -32,9 +32,7 @@ $(document).ready(function() {
 
   convertEditor.getSession().on('change', sendConvertAjaxRequest); 
   matchEditor.getSession().on('change', sendMatchAjaxRequest);
-
-  convertEditor.getSession().trigger('change');
-  matchEditor.getSession().trigger('change');
+  $("input[name='rule']").on('keyup paste', sendMatchAjaxRequest);
 
   function sendConvertAjaxRequest(e) {
     var code = ace.edit('convert-editor').getSession().getValue();
