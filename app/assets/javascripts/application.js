@@ -20,28 +20,26 @@ $(document).ready(function() {
   var MODE = 'ace/mode/ruby'
   var TABSIZE = 2;
 
-  var convertEditor = ace.edit('convert-editor')
-  convertEditor.setTheme(THEME);
-  convertEditor.getSession().setMode(MODE);
-  convertEditor.getSession().setTabSize(TABSIZE);
+  var editor = ace.edit('editor')
+  editor.setTheme(THEME);
+  editor.getSession().setMode(MODE);
+  editor.getSession().setTabSize(TABSIZE);
 
-  var matchEditor = ace.edit('match-editor');
-  matchEditor.setTheme(THEME);
-  matchEditor.getSession().setMode(MODE);
-  matchEditor.getSession().setTabSize(TABSIZE);
-
-  convertEditor.getSession().on('change', sendConvertAjaxRequest); 
-  matchEditor.getSession().on('change', sendMatchAjaxRequest);
+  editor.getSession().on('change', editorValueChanged); 
   $("input[name='rule']").on('keyup paste', sendMatchAjaxRequest);
 
-  sendConvertAjaxRequest();
-  sendMatchAjaxRequest();
+  editorValueChanged();
+
+  function editorValueChanged() {
+    sendConvertAjaxRequest();
+    sendMatchAjaxRequest();
+  }
 
   function sendConvertAjaxRequest() {
-    var code = ace.edit('convert-editor').getSession().getValue();
+    var code = ace.edit('editor').getSession().getValue();
 
     if(code.length == 0) {
-      $('#convert-result').attr('class', 'alert alert-alert');
+      $('#convert-result').attr('class', 'alert alert-info');
       $('#convert-result').html('Try to input your ruby code at the left side');
       return;
     }
@@ -71,7 +69,7 @@ $(document).ready(function() {
   }
 
   function sendMatchAjaxRequest() {
-    var code = ace.edit('match-editor').getSession().getValue();
+    var code = ace.edit('editor').getSession().getValue();
     var rule = $("input[name='rule']").val();
 
     if(code.length == 0 || rule.length == 0) {
@@ -86,6 +84,7 @@ $(document).ready(function() {
       url: '/match',
       data: { code: code, rule: rule }
     });
+
     request.done(function(msg) {
       $('#match-result').html('');
       var matchings = msg['matchings'];
