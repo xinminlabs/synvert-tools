@@ -16,9 +16,24 @@ $(document).ready(function() {
     });
   });
 
-  $('#convert-container textarea').on('change keyup paste', function() {
-    var code = $('#convert-container textarea').val();
+  var convertEditor = ace.edit('convert-editor')
+  convertEditor.setTheme('ace/theme/twilight');
+  convertEditor.getSession().setMode('ace/mode/ruby');
 
+  var matchEditor = ace.edit('match-editor');
+  matchEditor.setTheme('ace/theme/twilight');
+  matchEditor.getSession().setMode('ace/mode/ruby');
+
+  var rulesEditor = ace.edit('rules-editor');
+  rulesEditor.setTheme('ace/theme/twilight');
+  rulesEditor.getSession().setMode('ace/mode/ruby');
+
+  convertEditor.getSession().on('change', sendConvertAjaxRequest); 
+  matchEditor.getSession().on('change', sendMatchAjaxRequest);
+  rulesEditor.getSession().on('change', sendMatchAjaxRequest);
+
+  function sendConvertAjaxRequest(e) {
+    var code = ace.edit('convert-editor').getSession().getValue();
     var request = $.ajax({
       dateType: 'json',
       type: 'POST',
@@ -38,11 +53,11 @@ $(document).ready(function() {
 
     request.fail(function(jqXHR, textStatus) {
     });
-  });
+  }
 
-  $('#match-container textarea').on('change keyup paste', function() {
-    var code = $("#match-container textarea[name='code']").val();
-    var rules = $("#match-container textarea[name='rules']").val();
+  function sendMatchAjaxRequest(e) {
+    var code = ace.edit('match-editor').getSession().getValue();
+    var rules = ace.edit('rules-editor').getSession().getValue();
     var request = $.ajax({
       dataType: 'json',
       type: 'POST',
@@ -60,5 +75,5 @@ $(document).ready(function() {
     request.fail(function(jqXHR, textStatus) {
       $('#match-result').html('error');
     });
-  });
+  }
 });
