@@ -22,6 +22,9 @@ $(document).ready(function() {
 
   var editor = ace.edit('editor')
   editor.setTheme(THEME);
+  editor.setOptions({
+    fontSize: '19px'
+  });
   editor.getSession().setMode(MODE);
   editor.getSession().setTabSize(TABSIZE);
 
