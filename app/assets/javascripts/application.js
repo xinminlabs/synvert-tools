@@ -37,6 +37,13 @@ $(document).ready(function() {
 
   function sendConvertAjaxRequest(e) {
     var code = ace.edit('convert-editor').getSession().getValue();
+
+    if(code.length == 0) {
+      $('#convert-result').attr('class', 'alert alert-alert');
+      $('#convert-result').html('Try to input your ruby code');
+      return;
+    }
+
     var request = $.ajax({
       dateType: 'json',
       type: 'POST',
@@ -66,6 +73,8 @@ $(document).ready(function() {
     var rules = ace.edit('rules-editor').getSession().getValue();
 
     if(code.length == 0 || rules.length == 0) {
+      $('#match-result').attr('class', 'alert alert-info');
+      $('#match-result').html('Try to input your ruby code and rules');
       return;
     }
 
