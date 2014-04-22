@@ -18,29 +18,30 @@ $(document).ready(function() {
 
   var THEME = 'ace/theme/twilight';
   var MODE = 'ace/mode/ruby'
+  var TABSIZE = 2;
 
   var convertEditor = ace.edit('convert-editor')
   convertEditor.setTheme(THEME);
   convertEditor.getSession().setMode(MODE);
+  convertEditor.getSession().setTabSize(TABSIZE);
 
   var matchEditor = ace.edit('match-editor');
   matchEditor.setTheme(THEME);
   matchEditor.getSession().setMode(MODE);
-
-  var rulesEditor = ace.edit('rules-editor');
-  rulesEditor.setTheme(THEME);
-  rulesEditor.getSession().setMode(MODE);
+  matchEditor.getSession().setTabSize(TABSIZE);
 
   convertEditor.getSession().on('change', sendConvertAjaxRequest); 
   matchEditor.getSession().on('change', sendMatchAjaxRequest);
-  rulesEditor.getSession().on('change', sendMatchAjaxRequest);
+
+  convertEditor.getSession().trigger('change');
+  matchEditor.getSession().trigger('change');
 
   function sendConvertAjaxRequest(e) {
     var code = ace.edit('convert-editor').getSession().getValue();
 
     if(code.length == 0) {
       $('#convert-result').attr('class', 'alert alert-alert');
-      $('#convert-result').html('Try to input your ruby code');
+      $('#convert-result').html('Try to input your ruby code at the left side');
       return;
     }
 
@@ -70,11 +71,11 @@ $(document).ready(function() {
 
   function sendMatchAjaxRequest(e) {
     var code = ace.edit('match-editor').getSession().getValue();
-    var rules = ace.edit('rules-editor').getSession().getValue();
+    var rule = $("input[name='rule']").val();
 
-    if(code.length == 0 || rules.length == 0) {
+    if(code.length == 0 || rule.length == 0) {
       $('#match-result').attr('class', 'alert alert-info');
-      $('#match-result').html('Try to input your ruby code and rules');
+      $('#match-result').html('Try to input your ruby code at the left side');
       return;
     }
 
@@ -82,7 +83,7 @@ $(document).ready(function() {
       dataType: 'json',
       type: 'POST',
       url: '/match',
-      data: { code: code, rules: rules }
+      data: { code: code, rule: rule }
     });
     request.done(function(msg) {
       $('#match-result').html('');

@@ -6,17 +6,30 @@ html
     link href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css' rel='stylesheet' type='text/css'
     link href='assets/application.css' rel='stylesheet' type='text/css'
   body
-    div class='container'
-      div class='header'
-        h1 Synvert Tools
-        div class='nav nav-pills nav-justified'
-          li class='active' data-target='convert-container'
-            a href='#' Ruby Code => AST Node 
-          li data-target='match-container'
-            a href='#' Matching AST Node 
-      div class='wrapper'
-        == yield
-      div class='footer'
+    div class='navbar navbar-default' role='navigation'
+      div class='container header'
+        div class='navbar-header'
+          button type='button' class='navbar-toggle' data-toggle='collapse' data-target='#bs-navbar-collapse'
+            span class='sr-only' Toggle navigation
+            span class='icon-bar'
+            span class='icon-bar'
+            span class='icon-bar'
+          a class='navbar-brand' href='/' Synvert Tools
+
+        div class='navbar-collapse collapse' id='bs-navbar-collapse' style='height: 1px'
+          ul class='nav navbar-nav'
+            li class='active' data-target='convert-container'
+              a href='#' Ruby Code => AST Node 
+            li data-target='match-container'
+              a href='#' Matching AST Node 
+
+    div class='container wrapper'
+      == yield
+
+    div class='container footer'
+      div class='row'
+        div class='col-md-12' @ Xinmin Labs 2014
+
     script src='http://code.jquery.com/jquery-2.1.0.min.js'
     script src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js'
     script src='assets/application.js'

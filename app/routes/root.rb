@@ -25,9 +25,9 @@ module SynvertToolsApp
 
       post '/match' do
         code = params[:code].presence
-        rules = params[:rules].presence
+        rule = params[:rule].presence
         
-        matchings = SynvertTools.matching_code(code, rules) if code && rules
+        matchings = SynvertTools.matching_code(code, rule) if code && rule
 
         content_type :json
         { matchings: matchings || [] }.to_json
