@@ -34,7 +34,10 @@ $(document).ready(function() {
   matchEditor.getSession().on('change', sendMatchAjaxRequest);
   $("input[name='rule']").on('keyup paste', sendMatchAjaxRequest);
 
-  function sendConvertAjaxRequest(e) {
+  sendConvertAjaxRequest();
+  sendMatchAjaxRequest();
+
+  function sendConvertAjaxRequest() {
     var code = ace.edit('convert-editor').getSession().getValue();
 
     if(code.length == 0) {
@@ -67,7 +70,7 @@ $(document).ready(function() {
     });
   }
 
-  function sendMatchAjaxRequest(e) {
+  function sendMatchAjaxRequest() {
     var code = ace.edit('match-editor').getSession().getValue();
     var rule = $("input[name='rule']").val();
 
