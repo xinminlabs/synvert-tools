@@ -27,10 +27,10 @@ module SynvertToolsApp
         code = params[:code].presence
         rules = params[:rules].presence
         
-        matchings = SynvertTools.matching_code(code, rules)
+        matchings = SynvertTools.matching_code(code, rules) if code && rules
 
         content_type :json
-        { matchings: matchings }.to_json
+        { matchings: matchings || [] }.to_json
       end
     end
   end

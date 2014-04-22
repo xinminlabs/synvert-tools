@@ -47,20 +47,28 @@ $(document).ready(function() {
     request.done(function(msg) {
       var result = msg['result'];
       if(result) {
-        result = result.replace(/\n/g, '<br />');
-        result = result.replace(/ /g, '&nbsp');
+        $('#convert-result').attr('class', 'alert alert-success');
         $('#convert-result').html(result);
       } else {
+        $('#convert-result').attr('class', 'alert alert-warning');
+        $('#convert-result').html('No result is returned. Please try it again.');
       }
     });
 
     request.fail(function(jqXHR, textStatus) {
+      $('#convert-result').attr('class', 'alert alert-danger');
+      $('#convert-result').html('Error occurred. Please try it again');
     });
   }
 
   function sendMatchAjaxRequest(e) {
     var code = ace.edit('match-editor').getSession().getValue();
     var rules = ace.edit('rules-editor').getSession().getValue();
+
+    if(code.length == 0 || rules.length == 0) {
+      return;
+    }
+
     var request = $.ajax({
       dataType: 'json',
       type: 'POST',
@@ -71,12 +79,14 @@ $(document).ready(function() {
       $('#match-result').html('');
       var matchings = msg['matchings'];
       if(matchings[0] == 'match') {
+        $('#match-result').attr('class', 'alert alert-success');
         $('#match-result').append(msg['matchings'][1]);
       }
     });
 
     request.fail(function(jqXHR, textStatus) {
-      $('#match-result').html('error');
+      $('#match-result').attr('class', 'alert alert-danger');
+      $('#match-result').html('Error occurred. Please try it again');
     });
   }
 });
