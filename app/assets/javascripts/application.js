@@ -16,17 +16,20 @@ $(document).ready(function() {
     });
   });
 
+  var THEME = 'ace/theme/twilight';
+  var MODE = 'ace/mode/ruby'
+
   var convertEditor = ace.edit('convert-editor')
-  convertEditor.setTheme('ace/theme/twilight');
-  convertEditor.getSession().setMode('ace/mode/ruby');
+  convertEditor.setTheme(THEME);
+  convertEditor.getSession().setMode(MODE);
 
   var matchEditor = ace.edit('match-editor');
-  matchEditor.setTheme('ace/theme/twilight');
-  matchEditor.getSession().setMode('ace/mode/ruby');
+  matchEditor.setTheme(THEME);
+  matchEditor.getSession().setMode(MODE);
 
   var rulesEditor = ace.edit('rules-editor');
-  rulesEditor.setTheme('ace/theme/twilight');
-  rulesEditor.getSession().setMode('ace/mode/ruby');
+  rulesEditor.setTheme(THEME);
+  rulesEditor.getSession().setMode(MODE);
 
   convertEditor.getSession().on('change', sendConvertAjaxRequest); 
   matchEditor.getSession().on('change', sendMatchAjaxRequest);

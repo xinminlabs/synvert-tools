@@ -10,9 +10,9 @@ module SynvertToolsApp
       end
 
       post '/convert' do
-        @code = params[:code]
+        code = params[:code].presence
 
-        result = @code.present? ? SynvertTools.to_ast_node(@code).to_sexp : nil rescue nil
+        result = SynvertTools.to_ast_node(code).to_sexp
 
         if result
           result = result.gsub(/\n/, '<br>')
@@ -24,17 +24,13 @@ module SynvertToolsApp
       end
 
       post '/match' do
-        @code = params[:code]
-        @rules = params[:rules]
+        code = params[:code].presence
+        rules = params[:rules].presence
         
-        @matchings = if @code.present? && @rules.present?
-                       SynvertTools.matching_code(@code, @rules)
-                     else
-                       []
-                     end
+        matchings = SynvertTools.matching_code(code, rules)
 
         content_type :json
-        { matchings: @matchings }.to_json
+        { matchings: matchings }.to_json
       end
     end
   end
