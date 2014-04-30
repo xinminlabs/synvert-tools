@@ -29,6 +29,11 @@ module SynvertToolsApp
         
         matchings = SynvertTools.matching_code(code, rule) if code && rule
 
+        if matchings
+          matchings[1] = matchings[1].gsub(/\n/, '<br>')
+          matchings[1] = matchings[1].gsub(/(  )/, '&nbsp;&nbsp;&nbsp;&nbsp;')
+        end
+
         content_type :json
         { matchings: matchings || [] }.to_json
       end

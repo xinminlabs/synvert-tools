@@ -6,22 +6,23 @@ class SynvertTools
     instance.current_source = code
     node = Parser::CurrentRuby.parse code
     rules = eval("{#{str_rules}}")
+
+    matching_nodes = []
+
     if node.match? instance, rules
-      matching_node = node
+      matching_nodes << node
     else
       node.recursive_children do |child_node|
-        matching_node = child_node and break if child_node.match? instance, rules
+        matching_nodes << child_node if child_node.match? instance, rules
       end
     end
 
-    if matching_node
-      matching_code = code
-      matching_code.insert(matching_node.loc.expression.end_pos, "</span>")
-      matching_code.insert(matching_node.loc.expression.begin_pos, "<span class='highlight'>")
-      [:match, matching_code]
-    else
-      [:unmatch, code]
+    matching_nodes.reverse.each do |matching_node|
+      code.insert(matching_node.loc.expression.end_pos, "</span>")
+      code.insert(matching_node.loc.expression.begin_pos, "<span class='highlight'>")
     end
+
+    [matching_nodes.empty? ? :unmatch : :match, code]
   end
 
   def self.to_ast_node(code)
