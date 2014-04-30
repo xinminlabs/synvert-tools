@@ -1,8 +1,19 @@
 //= require 'ace/ace'
 //= require 'ace/theme-twilight'
 //= require 'ace/mode-ruby'
+//= require 'jquery.slimscroll.min'
 
 $(document).ready(function() {
+  $('#convert-result').slimScroll({
+    height: '600px',
+    start: 'bottom'
+  });
+
+  $('#match-result').slimScroll({
+    height: '467px',
+    start: 'bottom'
+  });
+
   $('.nav li a').on('click', function(e) {
     e.preventDefault();
     $('.nav li a').each(function(index, dom) {
@@ -59,6 +70,8 @@ $(document).ready(function() {
       if(result) {
         $('#convert-result').attr('class', 'alert alert-success');
         $('#convert-result').html(result);
+        $('#convert-result').slimScroll({ scrollTo: '99999px' })
+        $('#match-result').slimScroll({ scrollTo: '99999px' })
       } else {
         $('#convert-result').attr('class', 'alert alert-warning');
         $('#convert-result').html('No result is returned. Please try it again.');
@@ -94,6 +107,8 @@ $(document).ready(function() {
       if(matchings[0] == 'match') {
         $('#match-result').attr('class', 'alert alert-success');
         $('#match-result').append(msg['matchings'][1]);
+        $('#convert-result').slimScroll({ scrollTo: '99999px' })
+        $('#match-result').slimScroll({ scrollTo: '99999px' })
       }
     });
 
