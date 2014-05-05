@@ -1,6 +1,6 @@
 # Synvert Tools
 
-It is a sinatra app that uses [synvert](https://github.com/xinminlabs/synvert) to offer online code converting and matching service. 
+It helps to practice how synvert converts ruby code to ast nodes and how synvert rules match ruby code.
 
 ## Installation
 
@@ -8,9 +8,9 @@ It is a sinatra app that uses [synvert](https://github.com/xinminlabs/synvert) t
 git clone git@github.com:xinminlabs/synvert-tools.git
 cd synvert-tools
 bundle install
-bundle exec rack up
+bundle exec rackup
 ```
 
 ## Try it
 
-visit http://localhost:9292
+visit http://synvert-tools.herokuapp.com/
