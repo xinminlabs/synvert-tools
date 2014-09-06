@@ -9,8 +9,7 @@ module SynvertToolsApp
         disable :protection
         disable :static
 
-        set :slim, escape_html: true,
-                   layout_options: {views: 'app/views/layouts'}
+        set :slim, layout_options: {views: 'app/views/layouts'}
 
         enable :use_code
       end

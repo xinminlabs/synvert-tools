@@ -1,19 +1,17 @@
-require 'synvert'
+require 'synvert/core'
 
 class SynvertTools
   def self.matching_code(code, str_rules)
-    instance = Synvert::Rewriter::Instance.new '(tempfile)'
-    instance.current_source = code
     node = Parser::CurrentRuby.parse code
     rules = eval("{#{str_rules}}")
 
     matching_nodes = []
 
-    if node.match? instance, rules
+    if node.match? rules
       matching_nodes << node
     else
       node.recursive_children do |child_node|
-        matching_nodes << child_node if child_node.match? instance, rules
+        matching_nodes << child_node if child_node.match? rules
       end
     end
 

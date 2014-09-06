@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-ruby '2.1.1'
+ruby '2.1.2'
 
-gem 'synvert'
+gem 'synvert-core'
 gem 'sinatra', require: 'sinatra/base'
 gem 'sinatra-contrib', github: 'maccman/sinatra-contrib'
 gem 'rack-standards'
@@ -29,7 +29,6 @@ gem 'memcachier'
 
 group :development do
   gem 'thin'
-  gem 'debugger', require: 'ruby-debug'
 end
 
 group :test do
