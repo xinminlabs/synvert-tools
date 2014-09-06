@@ -6,7 +6,6 @@ module SynvertToolsApp
         set :root, File.expand_path('../../../', __FILE__)
 
         disable :method_override
-        disable :protection
         disable :static
 
         set :slim, layout_options: {views: 'app/views/layouts'}

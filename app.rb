@@ -32,14 +32,14 @@ module SynvertToolsApp
       disable :method_override
       disable :static
 
-      set :erb, escape_html: true
+      #set :erb, escape_html: true
 
-      set :sessions,
-          httponly: true,
-          secure: production?,
-          secure: false,
-          expire_after: 5.years,
-          secret: ENV['SESSION_SECRET']
+      #set :sessions,
+          #httponly: true,
+          #secure: production?,
+          #secure: false,
+          #expire_after: 5.years,
+          #secret: ENV['SESSION_SECRET']
       set :raise_errors, false
     end
 
