@@ -1,12 +1,12 @@
 module SynvertToolsApp
   module Routes
-    class Root < Base 
+    class Root < Base
       configure do
         set :views, 'app/views/root'
       end
 
       get '/' do
-        slim :index 
+        slim :index
       end
 
       post '/convert' do
@@ -16,7 +16,7 @@ module SynvertToolsApp
 
         if result
           result = result.gsub(/\n/, '<br>')
-          result = result.gsub(/( )/, '&nbsp;&nbsp;')
+          result = result.gsub(/( )/, '&nbsp;')
         end
 
         content_type :json
@@ -26,12 +26,12 @@ module SynvertToolsApp
       post '/match' do
         code = params[:code].presence
         rule = params[:rule].presence
-        
+
         matchings = SynvertTools.matching_code(code, rule) if code && rule
 
         if matchings
           matchings[1] = matchings[1].gsub(/\n/, '<br>')
-          matchings[1] = matchings[1].gsub(/(  )/, '&nbsp;&nbsp;&nbsp;&nbsp;')
+          matchings[1] = matchings[1].gsub(/(  )/, '&nbsp;&nbsp;')
         end
 
         content_type :json
