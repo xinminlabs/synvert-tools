@@ -3,7 +3,9 @@ div class='row'
     h3 Ruby source code
     hr
     div id='code-editor'
-      | post = FactoryGirl.create :post
+      | it "test post" do
+          post = FactoryGirl.create :post
+        end
 
   div class='col-md-6' id='play-container'
     h3 Snippet
