@@ -9,6 +9,21 @@ module SynvertToolsApp
         slim :index
       end
 
+      post '/play' do
+        code = params[:code].presence
+        snippet = params[:snippet].presence
+
+        result = SynvertTools.convert_code(code, snippet)
+
+        if result
+          result = result.gsub(/\n/, '<br>')
+          result = result.gsub(/( )/, '&nbsp;')
+        end
+
+        content_type :json
+        { result: result }.to_json
+      end
+
       post '/convert' do
         code = params[:code].presence
 

@@ -31,30 +31,47 @@ $(document).ready(function() {
   var MODE = 'ace/mode/ruby'
   var TABSIZE = 2;
 
-  var editor = ace.edit('editor')
-  editor.setTheme(THEME);
-  editor.setOptions({
-    fontSize: '19px'
+  var codeEditor = ace.edit('code-editor');
+  codeEditor.setTheme(THEME);
+  codeEditor.setOptions({
+    fontSize: '18px',
+    showGutter: false
   });
-  editor.getSession().setMode(MODE);
-  editor.getSession().setTabSize(TABSIZE);
+  codeEditor.getSession().setMode(MODE);
+  codeEditor.getSession().setTabSize(TABSIZE);
 
-  editor.getSession().on('change', editorValueChanged); 
+  codeEditor.getSession().on('change', codeEditorValueChanged);
+  codeEditorValueChanged();
+
+  var snippetEditor = ace.edit('snippet-editor');
+  snippetEditor.setTheme(THEME);
+  snippetEditor.setOptions({
+    fontSize: '16px',
+    showGutter: false
+  });
+  snippetEditor.getSession().setMode(MODE);
+  snippetEditor.getSession().setTabSize(TABSIZE);
+
+  snippetEditor.getSession().on('change', snippetEditorValueChanged);
+
   $("input[name='rule']").on('keyup paste', sendMatchAjaxRequest);
 
-  editorValueChanged();
-
-  function editorValueChanged() {
+  function codeEditorValueChanged() {
+    sendPlayAjaxRequest();
     sendConvertAjaxRequest();
     sendMatchAjaxRequest();
   }
 
-  function sendConvertAjaxRequest() {
-    var code = ace.edit('editor').getSession().getValue();
+  function snippetEditorValueChanged() {
+    sendPlayAjaxRequest();
+  }
 
-    if(code.length == 0) {
-      $('#convert-result').attr('class', 'alert alert-info');
-      $('#convert-result').html('Try to input your ruby code at the left side');
+  function sendConvertAjaxRequest() {
+    var code = ace.edit('code-editor').getSession().getValue();
+
+    if (code.length == 0) {
+      $('#convert-result').attr('class', 'alert alert-info')
+                          .html('Try to input your ruby code at the left side');
       return;
     }
 
@@ -66,31 +83,31 @@ $(document).ready(function() {
     });
 
     request.done(function(msg) {
-      var result = msg['result'];
-      if(result) {
-        $('#convert-result').attr('class', 'alert alert-success');
-        $('#convert-result').html(result);
-        $('#convert-result').slimScroll({ scrollTo: '99999px' })
+      var result = msg.result;
+      if (result) {
+        $('#convert-result').attr('class', 'alert alert-success')
+                            .html(result)
+                            .slimScroll({ scrollTo: '99999px' })
         $('#match-result').slimScroll({ scrollTo: '99999px' })
       } else {
-        $('#convert-result').attr('class', 'alert alert-warning');
-        $('#convert-result').html('No result is returned. Please try it again.');
+        $('#convert-result').attr('class', 'alert alert-warning')
+                            .html('No result is returned. Please try it again.');
       }
     });
 
     request.fail(function(jqXHR, textStatus) {
-      $('#convert-result').attr('class', 'alert alert-danger');
-      $('#convert-result').html('Error occurred. Please try it again');
+      $('#convert-result').attr('class', 'alert alert-danger')
+                          .html('Error occurred. Please try it again');
     });
   }
 
   function sendMatchAjaxRequest() {
-    var code = ace.edit('editor').getSession().getValue();
+    var code = ace.edit('code-editor').getSession().getValue();
     var rule = $("input[name='rule']").val();
 
-    if(code.length == 0 || rule.length == 0) {
-      $('#match-result').attr('class', 'alert alert-info');
-      $('#match-result').html('Try to input your ruby code at the left side');
+    if (code.length == 0 || rule.length == 0) {
+      $('#match-result').attr('class', 'alert alert-info')
+                        .html('Try to input your ruby code at the left side');
       return;
     }
 
@@ -103,18 +120,47 @@ $(document).ready(function() {
 
     request.done(function(msg) {
       $('#match-result').html('');
-      var matchings = msg['matchings'];
+      var matchings = msg.matchings;
       if(matchings[0] == 'match') {
-        $('#match-result').attr('class', 'alert alert-success');
-        $('#match-result').append(msg['matchings'][1]);
+        $('#match-result').attr('class', 'alert alert-success')
+                          .append(matchings[1])
+                          .slimScroll({ scrollTo: '99999px' });
         $('#convert-result').slimScroll({ scrollTo: '99999px' })
-        $('#match-result').slimScroll({ scrollTo: '99999px' })
       }
     });
 
     request.fail(function(jqXHR, textStatus) {
-      $('#match-result').attr('class', 'alert alert-danger');
-      $('#match-result').html('Error occurred. Please try it again');
+      $('#match-result').attr('class', 'alert alert-danger')
+                        .html('Error occurred. Please try it again');
+    });
+  }
+
+  function sendPlayAjaxRequest() {
+    var code = ace.edit('code-editor').getSession().getValue();
+    var snippet = ace.edit('snippet-editor').getSession().getValue();
+
+    if (code.length == 0 || snippet.length == 0) {
+      $('#play-result').attr('class', 'alert alert-info')
+                          .html('Try to input your ruby code at left side');
+      return;
+    }
+
+    var request = $.ajax({
+      dataType: 'json',
+      type: 'POST',
+      url: '/play',
+      data: { code: code, snippet: snippet }
+    });
+
+    request.done(function(msg) {
+      $('#play-result').attr('class', 'alert alert-success')
+                       .html(msg.result)
+                       .slimScroll({ scrollTo: '99999px' });
+    });
+
+    request.fail(function(jqXHR, textStatus) {
+      $('#convert-result').attr('class', 'alert alert-danger')
+                          .html('Error occurred. Please try it again');
     });
   }
 });

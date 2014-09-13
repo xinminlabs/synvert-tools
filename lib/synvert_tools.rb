@@ -1,4 +1,5 @@
 require 'synvert/core'
+require 'tempfile'
 
 class SynvertTools
   def self.matching_code(code, str_rules)
@@ -25,6 +26,28 @@ class SynvertTools
 
   def self.to_ast_node(code)
     Parser::CurrentRuby.parse(code)
+  end
+
+  def self.convert_code(code, snippet)
+    file = Tempfile.new 'test'
+    Synvert::Core::Configuration.instance.set(:path, '')
+    Synvert::Core::Configuration.instance.set(:skip_files, [])
+    begin
+      file.write code
+      file.rewind
+      Synvert::Rewriter.new 'test', 'test' do
+        within_file file.path do
+          eval(snippet)
+        end
+      end
+      Synvert::Rewriter.call 'test', 'test'
+      File.read file.path
+    rescue
+      code
+    ensure
+      file.close
+      file.unlink
+    end
   end
 
   # type: 'send', message: 'create

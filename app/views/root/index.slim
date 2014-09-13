@@ -2,10 +2,22 @@ div class='row'
   div class='col-md-6'
     h3 Ruby source code
     hr
-    div id='editor'
+    div id='code-editor'
       | post = FactoryGirl.create :post
 
-  div class='col-md-6' id='convert-container'
+  div class='col-md-6' id='play-container'
+    h3 Snippet
+    hr
+    div id='snippet-editor'
+      | with_node type: 'send', receiver: 'FactoryGirl', message: 'create' do
+          replace_with "create({{arguments}})"
+        end
+
+    h3 Rewritten code
+    hr
+    div id='play-result' class='alert alert-info'
+
+  div class='col-md-6 hidden' id='convert-container'
     h3 AST nodes
     hr
     div class='wrapper'
@@ -23,5 +35,3 @@ div class='row'
         h3 Matching result
         hr
         div id='match-result' class='alert alert-info' Try to input your ruby code at the left side
-
-

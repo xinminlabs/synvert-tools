@@ -18,10 +18,19 @@ describe SynvertTools do
   end
 
   describe '.to_ast_node' do
-    it 'converts  code to ast node' do
+    it 'converts code to ast node' do
       code = "post = FactoryGirl.create :post"
       node = Parser::CurrentRuby.parse(code)
       expect(SynvertTools.to_ast_node(code)).to eq node
+    end
+  end
+
+  describe '.convert_code' do
+    it 'converts code by snippet' do
+      code = "it 'test post' do\n  post = FactoryGirl.create(:post)\nend"
+      snippet = "with_node type: 'send', receiver: 'FactoryGirl', message: 'create' do\n  replace_with 'create({{arguments}})'\nend"
+      result = "it 'test post' do\n  post = create(:post)\nend"
+      expect(SynvertTools.convert_code(code, snippet)).to eq result
     end
   end
 end
