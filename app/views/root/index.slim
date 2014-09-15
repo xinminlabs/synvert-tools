@@ -11,8 +11,10 @@ div class='row'
     h3 Snippet
     hr
     div id='snippet-editor'
-      | with_node type: 'send', receiver: 'FactoryGirl', message: 'create' do
-          replace_with "create({{arguments}})"
+      | within_file 'test.rb' do
+          with_node type: 'send', receiver: 'FactoryGirl', message: 'create' do
+            replace_with "create({{arguments}})"
+          end
         end
 
     h3 Rewritten code

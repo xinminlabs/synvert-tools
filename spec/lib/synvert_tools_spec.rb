@@ -28,7 +28,13 @@ describe SynvertTools do
   describe '.convert_code' do
     it 'converts code by snippet' do
       code = "it 'test post' do\n  post = FactoryGirl.create(:post)\nend"
-      snippet = "with_node type: 'send', receiver: 'FactoryGirl', message: 'create' do\n  replace_with 'create({{arguments}})'\nend"
+      snippet =<<-EOC
+within_files '*.rb' do
+  with_node type: 'send', receiver: 'FactoryGirl', message: 'create' do
+    replace_with 'create({{arguments}})'
+  end
+end
+EOC
       result = "it 'test post' do\n  post = create(:post)\nend"
       expect(SynvertTools.convert_code(code, snippet)).to eq result
     end

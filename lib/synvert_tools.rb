@@ -35,10 +35,9 @@ class SynvertTools
     begin
       file.write code
       file.rewind
+      snippet.gsub!(/within_files? ['"].*['"] do/, "within_file '#{file.path}' do")
       Synvert::Rewriter.new 'test', 'test' do
-        within_file file.path do
-          eval(snippet)
-        end
+        eval(snippet)
       end
       Synvert::Rewriter.call 'test', 'test'
       File.read file.path
