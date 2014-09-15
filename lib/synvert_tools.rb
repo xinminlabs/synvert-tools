@@ -4,7 +4,7 @@ require 'tempfile'
 class SynvertTools
   def self.matching_code(code, str_rules)
     node = self.to_ast_node code
-    rules = self.to_hash_rules str_rules
+    rules = eval("{#{str_rules}}")
 
     matching_nodes = []
 
@@ -48,12 +48,5 @@ class SynvertTools
       file.close
       file.unlink
     end
-  end
-
-  # type: 'send', message: 'create
-  # =>
-  # {"type": "send", "message": "create"}
-  def self.to_hash_rules(str_rules)
-    ActiveSupport::JSON.decode('{"' + str_rules.gsub(':', '":').gsub(/, ?/, ', "').gsub("'", '"') + '}')
   end
 end
