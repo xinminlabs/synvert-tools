@@ -54,7 +54,7 @@ $(document).ready(function() {
 
   snippetEditor.getSession().on('change', snippetEditorValueChanged);
 
-  $("input[name='rule']").on('keyup paste', sendMatchAjaxRequest);
+  $("input[name='rule']").on('change', sendMatchAjaxRequest);
 
   function codeEditorValueChanged() {
     sendPlayAjaxRequest();
