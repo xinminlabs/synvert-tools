@@ -3,7 +3,7 @@
 //= require 'ace/mode-ruby'
 //= require 'jquery.slimscroll.min'
 
-$(document).ready(function() {
+$(function() {
   $('#convert-result').slimScroll({
     height: '600px',
     start: 'bottom'
@@ -25,6 +25,9 @@ $(document).ready(function() {
         $('#' + $(dom).parent().data('target')).addClass('hidden');
       }
     });
+    sendPlayAjaxRequest();
+    sendConvertAjaxRequest();
+    sendMatchAjaxRequest();
   });
 
   var THEME = 'ace/theme/twilight';
@@ -67,6 +70,10 @@ $(document).ready(function() {
   }
 
   function sendConvertAjaxRequest() {
+    if (!$('#convert-container').is(':visible')) {
+      return;
+    }
+
     var code = ace.edit('code-editor').getSession().getValue();
 
     if (code.length == 0) {
@@ -102,6 +109,10 @@ $(document).ready(function() {
   }
 
   function sendMatchAjaxRequest() {
+    if (!$('#match-container').is(':visible')) {
+      return;
+    }
+
     var code = ace.edit('code-editor').getSession().getValue();
     var rule = $("input[name='rule']").val();
 
@@ -136,6 +147,10 @@ $(document).ready(function() {
   }
 
   function sendPlayAjaxRequest() {
+    if (!$('#play-container').is(':visible')) {
+      return;
+    }
+
     var code = ace.edit('code-editor').getSession().getValue();
     var snippet = ace.edit('snippet-editor').getSession().getValue();
 
