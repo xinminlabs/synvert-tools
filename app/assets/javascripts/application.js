@@ -49,7 +49,7 @@ $(function() {
   var snippetEditor = ace.edit('snippet-editor');
   snippetEditor.setTheme(THEME);
   snippetEditor.setOptions({
-    fontSize: '16px',
+    fontSize: '18px',
     showGutter: false
   });
   snippetEditor.getSession().setMode(MODE);
