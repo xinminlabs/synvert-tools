@@ -23,7 +23,7 @@ module SynvertToolsApp
 
           content_type :json
           { result: result }.to_json
-        rescue Parser::SyntaxError
+        rescue Parser::SyntaxError, SyntaxError
           status 500
           {}.to_json
         end
@@ -42,7 +42,7 @@ module SynvertToolsApp
 
           content_type :json
           { result: result }.to_json
-        rescue Parser::SyntaxError
+        rescue Parser::SyntaxError, SyntaxError
           status 500
           {}.to_json
         end
@@ -62,7 +62,7 @@ module SynvertToolsApp
 
           content_type :json
           { matchings: matchings || [] }.to_json
-        rescue Parser::SyntaxError
+        rescue Parser::SyntaxError, SyntaxError
           status 500
           {}.to_json
         end
