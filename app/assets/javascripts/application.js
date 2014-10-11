@@ -59,14 +59,31 @@ $(function() {
 
   $("input[name='rule']").on('change', sendMatchAjaxRequest);
 
+  var convertAjaxRequest = null;
+  var matchAjaxRequest = null;
+  var playAjaxRequest = null;
   function codeEditorValueChanged() {
-    sendPlayAjaxRequest();
-    sendConvertAjaxRequest();
-    sendMatchAjaxRequest();
+    if(playAjaxRequest) {
+      playAjaxRequest.abort();
+    }
+    playAjaxRequest = sendPlayAjaxRequest();
+
+    if(convertAjaxRequest) {
+      convertAjaxRequest.abort();
+    }
+    convertAjaxRequest = sendConvertAjaxRequest();
+
+    if(matchAjaxRequest) {
+      matchAjaxRequest.abort();
+    }
+    matchAjaxRequest = sendMatchAjaxRequest();
   }
 
   function snippetEditorValueChanged() {
-    sendPlayAjaxRequest();
+    if(playAjaxRequest) {
+      playAjaxRequest.abort();
+    }
+    playAjaxRequest = sendPlayAjaxRequest();
   }
 
   function sendConvertAjaxRequest() {
@@ -106,6 +123,8 @@ $(function() {
       $('#convert-result').attr('class', 'alert alert-danger')
                           .html('Error occurred. Please try it again');
     });
+
+    return request;
   }
 
   function sendMatchAjaxRequest() {
@@ -144,6 +163,8 @@ $(function() {
       $('#match-result').attr('class', 'alert alert-danger')
                         .html('Error occurred. Please try it again');
     });
+
+    return request;
   }
 
   function sendPlayAjaxRequest() {
@@ -177,5 +198,7 @@ $(function() {
       $('#convert-result').attr('class', 'alert alert-danger')
                           .html('Error occurred. Please try it again');
     });
+
+    return request;
   }
 });
