@@ -27,6 +27,8 @@ gem 'stylus-source', '0.31.0'
 gem 'dalli'
 gem 'memcachier'
 
+gem 'newrelic_rpm'
+
 group :development do
   gem 'thin'
 end
