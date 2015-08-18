@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.1.3'
+ruby '2.2.2'
 
 gem 'synvert-core'
 gem 'sinatra', require: 'sinatra/base'
@@ -12,7 +12,7 @@ gem 'i18n'
 gem 'activesupport'
 gem 'rake'
 gem 'builder'
-gem 'json', '~> 1.7.7'
+gem 'json'
 gem 'dotenv'
 
 # Assets
@@ -23,7 +23,7 @@ gem 'closure-compiler'
 gem 'yui-compressor'
 gem 'coffee-script'
 gem 'stylus'
-gem 'stylus-source', '0.31.0'
+gem 'stylus-source'
 gem 'dalli'
 gem 'memcachier'
 
