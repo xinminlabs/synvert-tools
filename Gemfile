@@ -17,7 +17,7 @@ gem 'dotenv'
 
 # Assets
 gem 'sprockets'
-gem 'sprockets-memcache-store'
+gem 'sprockets-memcache-store', github: 'xinminlabs/sprockets-memcache-store', branch: 'feature/sprockets-3-compatible'
 gem 'uglifier'
 gem 'closure-compiler'
 gem 'yui-compressor'

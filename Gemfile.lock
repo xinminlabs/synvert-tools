@@ -9,6 +9,14 @@ GIT
       sinatra (~> 1.4.0)
       tilt (~> 1.3)
 
+GIT
+  remote: git://github.com/xinminlabs/sprockets-memcache-store.git
+  revision: 9224519b69a551613d4d3c20ea13fc2794b12e43
+  branch: feature/sprockets-3-compatible
+  specs:
+    sprockets-memcache-store (0.0.3)
+      dalli
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -71,8 +79,6 @@ GEM
       tilt (>= 1.3.3, < 2.1)
     sprockets (3.3.1)
       rack (~> 1.0)
-    sprockets-memcache-store (0.0.3)
-      dalli
     stylus (1.0.1)
       execjs
       stylus-source
@@ -121,7 +127,7 @@ DEPENDENCIES
   sinatra-contrib!
   slim
   sprockets
-  sprockets-memcache-store
+  sprockets-memcache-store!
   stylus
   stylus-source
   synvert-core
